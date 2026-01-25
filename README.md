@@ -1,5 +1,180 @@
-# Vue 3 + TypeScript + Vite
+# 💬 Chat Eliza
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A modern, responsive chat application built with Vue 3 and TypeScript, featuring real-time communication with Eliza bot through ConnectRPC.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+ 
+- pnpm (recommended) or npm
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone <your-repo-url>
+cd eliza-chat
+```
+
+2. Install dependencies
+```bash
+pnpm install
+```
+
+3. Run development server
+```bash
+pnpm dev
+```
+
+The app will be available at `http://localhost:5173`
+
+### Build for Production
+
+```bash
+pnpm build
+```
+
+Output will be in the `dist/` directory.
+
+### Linting & Formatting
+
+```bash
+pnpm lint          # ESLint check + auto-fix
+pnpm format        # Prettier format
+```
+
+## ✨ What I Built
+
+This project is my implementation of a chat interface that communicates with the Eliza bot via ConnectRPC. I focused on creating a clean, intuitive user experience while following modern Vue 3 best practices.
+
+### Key Features
+
+- 🎯 **Real-time messaging** with Eliza bot using ConnectRPC
+- 💾 **Persistent chat history** stored in localStorage
+- ⌨️ **Keyboard shortcuts** (Enter to send, Shift+Enter for new line)
+- 🚦 **Loading states** and error handling
+- 🕐 **Message timestamps** in HH:mm format
+- 🧹 **Clear chat** functionality with confirmation
+
+---
+
+## 🛠️ Tech Stack
+
+**Core:**
+- Vue 3 (Composition API)
+- TypeScript (strict mode)
+- Vite
+
+**API:**
+- ConnectRPC (@connectrpc/connect)
+- ConnectRPC Web (@connectrpc/connect-web)
+
+**Code Quality:**
+- ESLint (flat config)
+- Prettier
+- TypeScript ESLint
+
+---
+
+### Component Structure
+```
+src/
+├── api/              # API clients and services
+├── components/       # Vue components (single responsibility)
+├── composables/      # Reusable composition functions
+├── types/           # TypeScript interfaces and types
+└── assets/          # Global styles
+```
+
+I kept components small and focused. Each component does one thing well:
+- `ChatHeader` - Title and actions
+- `ChatMessage` - Individual message display
+- `ChatComposer` - Message input and send
+- `ChatStatus` - Connection status indicator
+
+### State Management
+Instead of Pinia/Vuex for this small app, I used a composable (`useChat`) that:
+- Centralizes chat logic
+- Handles API communication
+- Manages localStorage persistence
+- Provides reactive state to components
+
+This keeps the codebase simple while maintaining clean separation of concerns.
+
+### Type Safety
+All components use TypeScript with strict typing:
+```typescript
+interface Message {
+  id: string;
+  text: string;
+  sender: 'user' | 'bot' | 'system';
+  timestamp: Date;
+}
+```
+
+Union types prevent invalid states at compile time.
+
+---
+
+## 💡 Implementation Highlights
+
+### 1. Race Condition Prevention
+```typescript
+if (!text.trim() || requestStatus.value === 'pending') return;
+```
+The send function checks if a request is already in progress.
+
+### 2. Automatic Scroll
+```typescript
+watch(messages, () => {
+  scrollToBottom();
+}, { deep: true });
+```
+Messages list auto-scrolls when new messages arrive.
+
+### 3. Error Recovery
+Network errors are caught and displayed as system messages, allowing users to retry without losing context.
+
+### 4. Keyboard UX
+```typescript
+const handleKeydown = (e: KeyboardEvent) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    handleSend();
+  }
+};
+```
+Natural keyboard behavior: Enter sends, Shift+Enter adds new line.
+
+---
+
+## 🎯 What I Learned
+
+Working on this project helped me:
+- Master ConnectRPC integration in a browser environment
+- Implement proper TypeScript patterns in Vue 3
+- Handle async operations with proper error boundaries
+- Build accessible UI components
+- Structure a Vue 3 project for scalability
+
+---
+
+## 🔮 Future Improvements
+
+If I had more time, I'd add:
+- Typing indicator animation
+- Message reactions
+- Unit tests with Vitest
+- E2E tests with Playwright
+
+---
+
+## 🤝 About
+
+Built with ❤️ as a technical challenge.
+
+I'm passionate about building great user experiences with modern web technologies. Always eager to learn and grow as a developer.
+
+---
