@@ -94,14 +94,6 @@ I kept components small and focused. Each component does one thing well:
 - `ChatComposer` - Message input and send
 - `ChatStatus` - Connection status indicator
 
-### State Management
-Instead of Pinia/Vuex for this small app, I used a composable (`useChat`) that:
-- Centralizes chat logic
-- Handles API communication
-- Manages localStorage persistence
-- Provides reactive state to components
-
-This keeps the codebase simple while maintaining clean separation of concerns.
 
 ### Type Safety
 All components use TypeScript with strict typing:
@@ -168,3 +160,7 @@ If I had more time, I'd add:
 - Message reactions
 - Unit tests with Vitest
 - E2E tests with Playwright
+- Custom clear chat button
+- Changed ID Generation from Date.now() to crypto.randomUUID()
+- Improved Error Handling
+- LocalStorage safety implementation
