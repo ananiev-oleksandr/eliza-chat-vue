@@ -14,8 +14,8 @@ A modern, responsive chat application built with Vue 3 and TypeScript, featuring
 
 1. Clone the repository
 ```bash
-git clone <your-repo-url>
-cd eliza-chat
+git clone https://github.com/ananiev-oleksandr/eliza-chat-vue.git
+cd eliza-chat-vue
 ```
 
 2. Install dependencies
@@ -28,7 +28,7 @@ pnpm install
 pnpm dev
 ```
 
-The app will be available at `http://localhost:5173`
+The app will be available at `http://localhost:5174`
 
 ### Build for Production
 
@@ -168,13 +168,3 @@ If I had more time, I'd add:
 - Message reactions
 - Unit tests with Vitest
 - E2E tests with Playwright
-
----
-
-## 🤝 About
-
-Built with ❤️ as a technical challenge.
-
-I'm passionate about building great user experiences with modern web technologies. Always eager to learn and grow as a developer.
-
----
