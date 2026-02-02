@@ -2,13 +2,15 @@
 import type { Message } from '../types/chat';
 
 defineProps<{
-	message: Message
+	message: Message;
 }>();
 
 const formatTime = (date: Date): string => {
-	return new Intl.DateTimeFormat('uk-UA', {
+	const locale = Intl.DateTimeFormat().resolvedOptions().locale || navigator.language || 'en-US';
+
+	return new Intl.DateTimeFormat(locale, {
 		hour: '2-digit',
-		minute: '2-digit'
+		minute: '2-digit',
 	}).format(date);
 };
 
@@ -59,7 +61,8 @@ const getSenderLabel = (sender: Message['sender']): string => {
 }
 
 .msg--user .msg__bubble {
-	background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04)),
+	background:
+		linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04)),
 		rgba(43, 108, 255, 0.22);
 	border-color: rgba(43, 108, 255, 0.35);
 }

@@ -17,9 +17,13 @@ const scrollToBottom = async () => {
 	}
 };
 
-watch(messages, () => {
-	scrollToBottom();
-}, { deep: true });
+watch(
+	messages,
+	() => {
+		scrollToBottom();
+	},
+	{ deep: true }
+);
 </script>
 
 <template>
@@ -52,8 +56,7 @@ watch(messages, () => {
 .chat-card {
 	width: min(920px, 100%);
 	height: min(720px, 92vh);
-	background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 25%),
-		var(--card);
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 25%), var(--card);
 	border: 1px solid var(--border);
 	border-radius: var(--radius);
 	box-shadow: var(--shadow);

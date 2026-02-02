@@ -2,11 +2,11 @@
 import { ref } from 'vue';
 
 const props = defineProps<{
-	loading: boolean
+	loading: boolean;
 }>();
 
 const emit = defineEmits<{
-	send: [text: string]
+	send: [text: string];
 }>();
 
 const inputText = ref('');
@@ -29,7 +29,7 @@ const handleKeydown = (e: KeyboardEvent) => {
 };
 
 defineExpose({
-	focus: () => textareaRef.value?.focus()
+	focus: () => textareaRef.value?.focus(),
 });
 </script>
 
@@ -37,23 +37,21 @@ defineExpose({
 	<form @submit.prevent="handleSend" class="composer" aria-label="Message composer">
 		<div class="composer__field">
 			<label class="sr-only" for="message">Message</label>
-			<textarea 
-				v-model="inputText" 
-				ref="textareaRef" 
-				id="message" 
+			<textarea
+				v-model="inputText"
+				ref="textareaRef"
+				id="message"
 				class="input input--textarea"
-				placeholder="Type your message…" 
-				autocomplete="off" 
+				placeholder="Type your message…"
+				autocomplete="off"
 				@keydown="handleKeydown"
 			></textarea>
-			<div class="composer__hint">
-				Enter — send • Shift+Enter — new line
-			</div>
+			<div class="composer__hint">Enter — send • Shift+Enter — new line</div>
 		</div>
 
-		<button 
+		<button
 			:disabled="loading || !inputText.trim()"
-			:class="[loading ? 'is-loading' : '', 'btn', 'btn--primary']" 
+			:class="[loading ? 'is-loading' : '', 'btn', 'btn--primary']"
 			type="submit"
 		>
 			<span class="btn__text">Send</span>

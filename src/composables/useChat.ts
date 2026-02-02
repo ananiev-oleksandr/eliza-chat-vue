@@ -16,7 +16,7 @@ export function useChat() {
 				const parsed = JSON.parse(saved);
 				messages.value = parsed.map((m: Message) => ({
 					...m,
-					timestamp: new Date(m.timestamp)
+					timestamp: new Date(m.timestamp),
 				}));
 			} catch {
 				localStorage.removeItem(STORAGE_KEY);
@@ -24,20 +24,40 @@ export function useChat() {
 		}
 	});
 
-	watch(messages, (newMessages) => {
-		localStorage.setItem(STORAGE_KEY, JSON.stringify(newMessages));
-	}, { deep: true });
+	let saveTimeout: ReturnType<typeof setTimeout> | null = null;
+	const saveToLocalStorage = (newMessages: Message[]) => {
+		if (saveTimeout) {
+			clearTimeout(saveTimeout);
+		}
+
+		saveTimeout = setTimeout(() => {
+			try {
+				localStorage.setItem(STORAGE_KEY, JSON.stringify(newMessages));
+			} catch (error) {
+				console.error('Failed to save chat history:', error);
+			}
+			saveTimeout = null;
+		}, 300);
+	};
+
+	watch(
+		messages,
+		(newMessages) => {
+			saveToLocalStorage(newMessages);
+		},
+		{ deep: true }
+	);
 
 	const sendMessage = async (text: string) => {
 		if (!text.trim() || requestStatus.value === 'pending') return;
 
 		const userMsg: Message = {
-			id: Date.now().toString(),
+			id: crypto.randomUUID(),
 			text: text.trim(),
 			sender: 'user',
-			timestamp: new Date()
+			timestamp: new Date(),
 		};
-		
+
 		messages.value.push(userMsg);
 		requestStatus.value = 'pending';
 
@@ -45,18 +65,18 @@ export function useChat() {
 			const response = await elizaClient.say({ sentence: text });
 			requestStatus.value = 'idle';
 			messages.value.push({
-				id: (Date.now() + 1).toString(),
+				id: crypto.randomUUID(),
 				text: response.sentence,
 				sender: 'bot',
-				timestamp: new Date()
+				timestamp: new Date(),
 			});
 		} catch {
 			requestStatus.value = 'error';
 			messages.value.push({
-				id: (Date.now() + 1).toString(),
-				text: "Network error. Please try again.",
+				id: crypto.randomUUID(),
+				text: 'Network error. Please try again.',
 				sender: 'system',
-				timestamp: new Date()
+				timestamp: new Date(),
 			});
 		}
 	};
@@ -73,6 +93,6 @@ export function useChat() {
 		requestStatus,
 		isLoading,
 		sendMessage,
-		clearChat
+		clearChat,
 	};
 }

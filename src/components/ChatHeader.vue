@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineEmits<{
-	clear: []
+	clear: [];
 }>();
 </script>
 

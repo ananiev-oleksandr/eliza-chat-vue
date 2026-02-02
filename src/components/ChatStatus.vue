@@ -3,14 +3,14 @@ import { computed } from 'vue';
 import type { RequestStatus } from '../types/chat';
 
 const props = defineProps<{
-	status: RequestStatus
+	status: RequestStatus;
 }>();
 
 const statusText = computed(() => {
 	const labels: Record<RequestStatus, string> = {
 		idle: 'Ready',
 		pending: 'Sending...',
-		error: 'Network error'
+		error: 'Network error',
 	};
 	return labels[props.status];
 });
