@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { RequestStatus } from '../types/chat';
+
+import type { RequestStatus } from '../../../types/chat';
 
 const props = defineProps<{
 	status: RequestStatus;
@@ -18,7 +19,7 @@ const statusText = computed(() => {
 
 <template>
 	<div class="status">
-		<span :class="['status__dot', `status--${status}`]"></span>
+		<span :class="['status__dot', `status--${props.status}`]"></span>
 		<span class="status__text">{{ statusText }}</span>
 	</div>
 </template>

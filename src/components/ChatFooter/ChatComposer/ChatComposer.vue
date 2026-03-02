@@ -27,10 +27,6 @@ const handleKeydown = (e: KeyboardEvent) => {
 		handleSend();
 	}
 };
-
-defineExpose({
-	focus: () => textareaRef.value?.focus(),
-});
 </script>
 
 <template>
