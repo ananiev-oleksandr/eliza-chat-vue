@@ -82,9 +82,30 @@ This project is my implementation of a chat interface that communicates with the
 
 ```
 src/
-├── api/              # API clients and services
-├── components/       # Vue components (single responsibility)
-├── composables/      # Reusable composition functions
-├── types/           # TypeScript interfaces and types
-└── assets/          # Global styles
+├── api/
+│   └── eliza.ts                          # ConnectRPC client
+├── assets/
+│   └── main.css                          # Global styles
+├── components/
+│   ├── ChatEliza.vue                     # Main chat feature container
+│   ├── ChatBody/
+│   │   ├── ChatBody.vue                  # Scrollable messages area
+│   │   └── ChatMessage/
+│   │       └── ChatMessage.vue           # Single message view
+│   ├── ChatFooter/
+│   │   ├── ChatFooter.vue                # Footer composition
+│   │   ├── ChatComposer/
+│   │   │   └── ChatComposer.vue          # Message input + send
+│   │   └── ChatStatus/
+│   │       └── ChatStatus.vue            # Request status indicator
+│   └── ChatHeader/
+│       └── ChatHeader.vue                # Header and clear action
+├── composables/
+│   ├── useChat.ts                        # Chat state and side-effects
+│   └── __tests__/
+│       └── useChat.test.ts               # Composable unit tests
+├── types/
+│   └── chat.ts                           # Shared chat types
+├── App.vue
+└── main.ts
 ```
